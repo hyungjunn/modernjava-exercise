@@ -58,4 +58,13 @@ public class Farmer {
         return result;
     }
 
+    public static List<String> prettyPrintApple(List<Apple> inventory, AppleFormatter f) {
+        List<String> result = new ArrayList<>();
+        for (Apple apple : inventory) {
+            result.add(f.print(apple));
+        }
+        return result;
+    }
+
+
 }

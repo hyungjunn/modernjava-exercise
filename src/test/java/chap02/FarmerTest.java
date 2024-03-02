@@ -116,4 +116,16 @@ class FarmerTest {
         assertThat(applesByRed.get(0).getWeight()).isEqualTo(150);
         assertThat(applesByRed.get(1).getWeight()).isEqualTo(200);
     }
+
+    @Test
+    void print_apples_weight() {
+        //when
+        List<String> strings = Farmer.prettyPrintApple(apples, new AppleWeightFormatter());
+
+        //then
+        assertThat(strings.get(0)).isEqualTo("Apple의 무게: " + 150);
+        assertThat(strings.get(1)).isEqualTo("Apple의 무게: " + 200);
+        assertThat(strings.get(2)).isEqualTo("Apple의 무게: " + 300);
+        assertThat(strings.get(3)).isEqualTo("Apple의 무게: " + 500);
+    }
 }
