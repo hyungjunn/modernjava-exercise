@@ -117,6 +117,7 @@ class FarmerTest {
         assertThat(applesByRed.get(1).getWeight()).isEqualTo(200);
     }
 
+    @DisplayName("주어진 사과들의 무게를 반환하는 메서드를 테스트한다")
     @Test
     void print_apples_weight() {
         //when
@@ -127,5 +128,18 @@ class FarmerTest {
         assertThat(strings.get(1)).isEqualTo("Apple의 무게: " + 200);
         assertThat(strings.get(2)).isEqualTo("Apple의 무게: " + 300);
         assertThat(strings.get(3)).isEqualTo("Apple의 무게: " + 500);
+    }
+
+    @DisplayName("주어진 사과들의 색깔을 반환하는 메서드를 테스트한다")
+    @Test
+    void print_apples_color() {
+        //when
+        List<String> strings = Farmer.prettyPrintApple(apples, new AppleColorFormatter());
+
+        //then
+        assertThat(strings.get(0)).isEqualTo("Apple의 색깔: " + RED);
+        assertThat(strings.get(1)).isEqualTo("Apple의 색깔: " + GREEN);
+        assertThat(strings.get(2)).isEqualTo("Apple의 색깔: " + RED);
+        assertThat(strings.get(3)).isEqualTo("Apple의 색깔: " + GREEN);
     }
 }
