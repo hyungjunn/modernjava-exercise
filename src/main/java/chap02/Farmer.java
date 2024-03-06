@@ -3,6 +3,7 @@ package chap02;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
 
 import static chap02.Color.GREEN;
 import static chap02.Color.RED;
@@ -69,6 +70,16 @@ public class Farmer {
         List<String> result = new ArrayList<>();
         for (Apple apple : inventory) {
             result.add(f.print(apple));
+        }
+        return result;
+    }
+
+    public static <T> List<T> filter(List<T> inventory, Predicate<T> p) {
+        List<T> result = new ArrayList<>();
+        for (T t : inventory) {
+            if (p.test(t)) {
+                result.add(t);
+            }
         }
         return result;
     }

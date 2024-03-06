@@ -159,4 +159,26 @@ class FarmerTest {
         assertThat(actual).isEqualTo(expected);
 
     }
+
+    @DisplayName("빨간 사과 필터링을 람다 표현식을 이용해서 테스트한다")
+    @ParameterizedTest
+    @CsvSource(value = {"0:RED", "1:RED"}, delimiter = ':')
+    void filter_red_apples_lambda(int input, Color expected) {
+        List<Apple> redApples = Farmer.filterApples(apples, apple -> RED == apple.getColor());
+
+        Color actual = redApples.get(input).getColor();
+        assertThat(actual).isEqualTo(expected);
+
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"0:2", "1:4", "2:6", "3:8", "4:10"}, delimiter = ':')
+    void name(Integer input, Integer expected) {
+        List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+
+        List<Integer> evenNumbers = Farmer.filter(numbers, (Integer i) -> i % 2 == 0);
+        Integer actual = evenNumbers.get(input);
+
+        assertThat(actual).isEqualTo(expected);
+    }
 }
