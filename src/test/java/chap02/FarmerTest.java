@@ -143,4 +143,20 @@ class FarmerTest {
         //then
         assertThat(actual).isEqualTo("Apple의 색깔: " + expected);
     }
+
+    @DisplayName("빨간 사과 필터링을 익명함수를 이용해서 테스트한다")
+    @ParameterizedTest
+    @CsvSource(value = {"0:RED", "1:RED"}, delimiter = ':')
+    void filter_red_apples_anonymous(int input, Color expected) {
+        List<Apple> redApples = Farmer.filterApples(apples, new ApplePredicate() {
+            @Override
+            public boolean test(Apple apple) {
+                return RED == apple.getColor();
+            }
+        });
+
+        Color actual = redApples.get(input).getColor();
+        assertThat(actual).isEqualTo(expected);
+
+    }
 }

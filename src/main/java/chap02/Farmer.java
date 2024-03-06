@@ -1,11 +1,18 @@
 package chap02;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static chap02.Color.GREEN;
+import static chap02.Color.RED;
 
 public class Farmer {
+
+    List<Apple> inventory = Arrays.asList(
+            new Apple(80, Color.GREEN),
+            new Apple(155, Color.GREEN),
+            new Apple(120, Color.RED));
 
     public static List<Apple> filterGreenApples(List<Apple> inventory) {
         List<Apple> result = new ArrayList<>();
