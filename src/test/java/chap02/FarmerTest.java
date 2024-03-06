@@ -3,6 +3,9 @@ package chap02;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Arrays;
 import java.util.List;
@@ -27,25 +30,25 @@ class FarmerTest {
     }
 
     @DisplayName("녹색 사과 필터링")
-    @Test
-    void filter_green_apples() {
+    @ParameterizedTest
+    @ValueSource(ints = {0, 1})
+    void filter_green_apples(int input) {
         //when
         List<Apple> greenApples = Farmer.filterGreenApples(apples);
 
         //then
-        assertThat(greenApples.get(0).getColor()).isEqualTo(GREEN);
-        assertThat(greenApples.get(1).getColor()).isEqualTo(GREEN);
+        assertThat(greenApples.get(input).getColor()).isEqualTo(GREEN);
     }
 
     @DisplayName("주어진 색깔로 사과 필터링")
-    @Test
-    void filter_apples_by_color() {
+    @ParameterizedTest
+    @ValueSource(ints = {0, 1})
+    void filter_apples_by_color(int input) {
         //when
         List<Apple> applesByColor = Farmer.filterAppleByColor(apples, RED);
 
         //then
-        assertThat(applesByColor.get(0).getColor()).isEqualTo(RED);
-        assertThat(applesByColor.get(1).getColor()).isEqualTo(RED);
+        assertThat(applesByColor.get(input).getColor()).isEqualTo(RED);
     }
 
     @DisplayName("주어진 무게로 사과 필터링")
@@ -74,25 +77,25 @@ class FarmerTest {
     }
 
     @DisplayName("빨간 사과 필터링을 ApplePredicate를 이용해서 테스트한다")
-    @Test
-    void filter_apples_by_predicate_color_red() {
+    @ParameterizedTest
+    @ValueSource(ints = {0, 1})
+    void filter_apples_by_predicate_color_red(int input) {
         //when
         List<Apple> applesByRed = Farmer.filterApples(apples, new AppleRedColorPredicate());
 
         //then
-        assertThat(applesByRed.get(0).getColor()).isEqualTo(RED);
-        assertThat(applesByRed.get(1).getColor()).isEqualTo(RED);
+        assertThat(applesByRed.get(input).getColor()).isEqualTo(RED);
     }
 
     @DisplayName("녹색 사과 필터링을 ApplePredicate를 이용해서 테스트한다")
-    @Test
-    void filter_apples_by_predicate_color_green() {
+    @ParameterizedTest
+    @ValueSource(ints = {0, 1})
+    void filter_apples_by_predicate_color_green(int input) {
         //when
         List<Apple> applesByRed = Farmer.filterApples(apples, new AppleGreenColorPredicate());
 
         //then
-        assertThat(applesByRed.get(0).getColor()).isEqualTo(GREEN);
-        assertThat(applesByRed.get(1).getColor()).isEqualTo(GREEN);
+        assertThat(applesByRed.get(input).getColor()).isEqualTo(GREEN);
     }
 
     @DisplayName("무게가 200을 초과하는 사과 필터링을 ApplePredicate를 이용해서 테스트한다")
@@ -118,28 +121,26 @@ class FarmerTest {
     }
 
     @DisplayName("주어진 사과들의 무게를 반환하는 메서드를 테스트한다")
-    @Test
-    void print_apples_weight() {
+    @ParameterizedTest
+    @CsvSource(value = {"0:150", "1:200", "2:300", "3:500"}, delimiter = ':')
+    void print_apples_weight(int input, int expected) {
         //when
         List<String> strings = Farmer.prettyPrintApple(apples, new AppleWeightFormatter());
+        String actual = strings.get(input);
 
         //then
-        assertThat(strings.get(0)).isEqualTo("Apple의 무게: " + 150);
-        assertThat(strings.get(1)).isEqualTo("Apple의 무게: " + 200);
-        assertThat(strings.get(2)).isEqualTo("Apple의 무게: " + 300);
-        assertThat(strings.get(3)).isEqualTo("Apple의 무게: " + 500);
+        assertThat(actual).isEqualTo("Apple의 무게: " + expected);
     }
 
     @DisplayName("주어진 사과들의 색깔을 반환하는 메서드를 테스트한다")
-    @Test
-    void print_apples_color() {
+    @ParameterizedTest
+    @CsvSource(value = {"0:RED", "1:GREEN", "2:RED", "3:GREEN"}, delimiter = ':')
+    void print_apples_color(int input, Color expected) {
         //when
         List<String> strings = Farmer.prettyPrintApple(apples, new AppleColorFormatter());
+        String actual = strings.get(input);
 
         //then
-        assertThat(strings.get(0)).isEqualTo("Apple의 색깔: " + RED);
-        assertThat(strings.get(1)).isEqualTo("Apple의 색깔: " + GREEN);
-        assertThat(strings.get(2)).isEqualTo("Apple의 색깔: " + RED);
-        assertThat(strings.get(3)).isEqualTo("Apple의 색깔: " + GREEN);
+        assertThat(actual).isEqualTo("Apple의 색깔: " + expected);
     }
 }
